@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGR"
+    tools:context=".GuessEuroFlags">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/abc_vector_test"
+            android:background="?android:selectableItemBackground"
+            />
+
+        <ImageView
+            android:id="@+id/countryImage"
+            android:layout_width="250dp"
+            android:layout_height="125dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            app:srcCompat="@drawable/image001" />
+
+        <TextView
+            android:textColor="@color/black"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:id="@+id/country_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="На рисунке флаг страны:  " />
+
+        <TextView
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Выберите какая в данной стране столица" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_marginBottom="10dp"
+                android:id="@+id/firstButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:background="@drawable/button"
+                android:text="столица номер один"
+                />
+
+            <Button
+                android:layout_marginBottom="10dp"
+                android:id="@+id/secondButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:background="@drawable/button"
+                android:text="столица номер два" />
+
+            <Button
+                android:layout_marginBottom="10dp"
+                android:id="@+id/thirdButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:background="@drawable/button"
+                android:text="страна номер три" />
+
+            <Button
+                android:layout_marginBottom="10dp"
+                android:id="@+id/fourthButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:background="@drawable/button"
+                android:text="столица номер четыре" />
+
+            <Button
+                android:id="@+id/fifthButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:background="@drawable/button"
+                android:text="столица номер пять" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            >
+
+            <TextView
+                android:id="@+id/message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:text="" />
+
+            <Button
+                android:layout_marginBottom="10dp"
+                android:id="@+id/next"
+                android:layout_marginTop="10dp"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="след. страна >>>"
+                android:background="@drawable/next"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

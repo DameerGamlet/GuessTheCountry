@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Игра "Угадай страну"</string>
+    <string name="game1">Угадай страну по флагу</string>
+    <string name="game2">Угадай страну в Азии по флагу</string>
+    <string name="game3">Угадай страну в Европе по флагу</string>
+    <string name="sett">Настройки</string>
+    <string name="ch">Выберите игру</string>
+    <string name="game4">Угадай страну по гербу</string>
+
+    <string name="_15">15</string>
+    <string name="_1">1</string>
+</resources>
