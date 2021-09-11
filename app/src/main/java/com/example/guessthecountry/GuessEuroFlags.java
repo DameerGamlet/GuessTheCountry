@@ -2,6 +2,7 @@ package com.example.guessthecountry;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -27,14 +28,16 @@ public class GuessEuroFlags extends AppCompatActivity {
     int numberIgame, indexCorrectResult,
             countEuroFlags = variable.countEuroFlags;
     ImageView countryImage;
+    ImageButton soundImageButton;
     Button first, second, third, fourth, fifth, next;
-    SharedPreferences sPref, sPrefArr, sPrefOne, sPrefTwo;
+    SharedPreferences sPref, sPrefArr, sPrefOne, sPrefTwo, sPrefSound;
     ImageButton back;
     String name_country, cap;
     TextView messageForResult, countryInfo;
     final String mesTrue = "Верно. Столиция выбрана верно.",
             mesFalse1 = "Неверно, это не \"",
             mesFalse2 = "\". \nПравильный ответ: ";
+    MediaPlayer trueAnswerSound, falseAnswerSound;
 
     private void init() {
         countryImage = findViewById(R.id.countryImage);
@@ -43,6 +46,8 @@ public class GuessEuroFlags extends AppCompatActivity {
         third = findViewById(R.id.thirdButton);
         fourth = findViewById(R.id.fourthButton);
         fifth = findViewById(R.id.fifthButton);
+
+        soundImageButton = findViewById(R.id.soundImage);
 
         countryInfo = findViewById(R.id.country_info);
 
@@ -55,6 +60,22 @@ public class GuessEuroFlags extends AppCompatActivity {
         third.setId((int) 2);
         fourth.setId((int) 3);
         fifth.setId((int) 4);
+
+        trueAnswerSound = MediaPlayer.create(this, R.raw.true_answer);
+        falseAnswerSound = MediaPlayer.create(this, R.raw.false_answer);
+    }
+
+    public void imageIn(int i){
+        if(i == 1){
+            soundImageButton.setImageResource(R.drawable.onsound);
+        }
+        else if(i == 0){
+            soundImageButton.setImageResource(R.drawable.offsound);
+        }
+    }
+
+    private void soundPlay(MediaPlayer sound){
+        sound.start();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -64,11 +85,26 @@ public class GuessEuroFlags extends AppCompatActivity {
         setContentView(R.layout.activity_guess_euro_flags);
         init();
         generated();
+        imageIn(loadSound());
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        soundImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(loadSound() == 1){
+                    saveSound(0);
+                }
+                else if(loadSound() == 0){
+                    saveSound(1);
+                }
+                imageIn(loadSound());
+                System.out.println("sound: " + loadSound());
             }
         });
 
@@ -80,9 +116,13 @@ public class GuessEuroFlags extends AppCompatActivity {
                     savedResultTwo();
                     first.setBackgroundResource(R.drawable.truebutton);
                     messageForResult.setText(mesTrue);
+                    if(loadSound() == 1)
+                        soundPlay(trueAnswerSound);
                 } else {
                     first.setBackgroundResource(R.drawable.falsebutton);
                     messageForResult.setText(mesFalse1 + first.getText() + mesFalse2 + cap);
+                    if(loadSound() == 1)
+                        soundPlay(falseAnswerSound);
                 }
                 savedResultOne();
                 offClickableButton();
@@ -96,9 +136,13 @@ public class GuessEuroFlags extends AppCompatActivity {
                     savedResultTwo();
                     second.setBackgroundResource(R.drawable.truebutton);
                     messageForResult.setText(mesTrue);
+                    if(loadSound() == 1)
+                        soundPlay(trueAnswerSound);
                 } else {
                     second.setBackgroundResource(R.drawable.falsebutton);
                     messageForResult.setText(mesFalse1 + second.getText() + mesFalse2 + cap);
+                    if(loadSound() == 1)
+                        soundPlay(falseAnswerSound);
                 }
                 offClickableButton();
                 savedResultOne();
@@ -112,9 +156,13 @@ public class GuessEuroFlags extends AppCompatActivity {
                     savedResultTwo();
                     third.setBackgroundResource(R.drawable.truebutton);
                     messageForResult.setText(mesTrue);
+                    if(loadSound() == 1)
+                        soundPlay(trueAnswerSound);
                 } else {
                     third.setBackgroundResource(R.drawable.falsebutton);
                     messageForResult.setText(mesFalse1 + third.getText() + mesFalse2 + cap);
+                    if(loadSound() == 1)
+                        soundPlay(falseAnswerSound);
                 }
                 offClickableButton();
                 savedResultOne();
@@ -128,9 +176,13 @@ public class GuessEuroFlags extends AppCompatActivity {
                     savedResultTwo();
                     fourth.setBackgroundResource(R.drawable.truebutton);
                     messageForResult.setText(mesTrue);
+                    if(loadSound() == 1)
+                        soundPlay(trueAnswerSound);
                 } else {
                     fourth.setBackgroundResource(R.drawable.falsebutton);
                     messageForResult.setText(mesFalse1 + fourth.getText() + mesFalse2 + cap);
+                    if(loadSound() == 1)
+                        soundPlay(falseAnswerSound);
                 }
                 offClickableButton();
                 savedResultOne();
@@ -144,9 +196,13 @@ public class GuessEuroFlags extends AppCompatActivity {
                     savedResultTwo();
                     fifth.setBackgroundResource(R.drawable.truebutton);
                     messageForResult.setText(mesTrue);
+                    if(loadSound() == 1)
+                        soundPlay(trueAnswerSound);
                 } else {
                     fifth.setBackgroundResource(R.drawable.falsebutton);
                     messageForResult.setText(mesFalse1 + first.getText() + mesFalse2 + cap);
+                    if(loadSound() == 1)
+                        soundPlay(falseAnswerSound);
                 }
                 offClickableButton();
                 savedResultOne();
@@ -236,6 +292,18 @@ public class GuessEuroFlags extends AppCompatActivity {
     public int loadResultTwo() {
         sPrefTwo = getSharedPreferences(variable.SAVE_TWO, Context.MODE_PRIVATE);
         return sPrefTwo.getInt(variable.SAVE_TWO, 0);
+    }
+
+    public void saveSound(int sound){
+        sPrefSound = getSharedPreferences(variable.SOUND, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editoro = sPrefSound.edit();
+        editoro.putInt(variable.SOUND, sound);
+        editoro.apply();
+    }
+
+    public int loadSound(){
+        sPrefSound = getSharedPreferences(variable.SOUND, Context.MODE_PRIVATE);
+        return sPrefSound.getInt(variable.SOUND, 0);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
