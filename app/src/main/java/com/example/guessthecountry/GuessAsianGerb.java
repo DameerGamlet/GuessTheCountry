@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -27,13 +28,15 @@ public class GuessAsianGerb extends AppCompatActivity {
     Random random = new Random();
     ImageView countryImage;
     Button first, second, third, fourth, fifth, next;
-    SharedPreferences sPref, sPrefOne, sPrefTwo;
+    SharedPreferences sPref, sPrefOne, sPrefTwo, sPrefSound;
     ImageButton back;
+    ImageButton soundImageButton;
     String name_country;
     TextView messageForResult;
     final String mesTrue = "Верно. На картинке изображён герб страны \"",
             mesFalse1 = "Неверно, это не герб страны \"",
             mesFalse2 = "\". \nПравильный ответ: ";
+    MediaPlayer trueAnswerSound, falseAnswerSound;
 
     private void init() {
         countryImage = findViewById(R.id.countryImage);
@@ -48,11 +51,29 @@ public class GuessAsianGerb extends AppCompatActivity {
         messageForResult = findViewById(R.id.message);
         back = findViewById(R.id.back);
 
+        soundImageButton = findViewById(R.id.soundImage);
+
         first.setId(0);
         second.setId((int) 1);
         third.setId((int) 2);
         fourth.setId((int) 3);
         fifth.setId((int) 4);
+
+        trueAnswerSound = MediaPlayer.create(this, R.raw.true_answer);
+        falseAnswerSound = MediaPlayer.create(this, R.raw.false_answer);
+    }
+
+    public void imageIn(int i){
+        if(i == 1){
+            soundImageButton.setImageResource(R.drawable.onsound);
+        }
+        else if(i == 0){
+            soundImageButton.setImageResource(R.drawable.offsound);
+        }
+    }
+
+    private void soundPlay(MediaPlayer sound){
+        sound.start();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -62,11 +83,26 @@ public class GuessAsianGerb extends AppCompatActivity {
         setContentView(R.layout.activity_guess_asian_gerb);
         init();
         generated();
+        imageIn(loadSound());
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        soundImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(loadSound() == 1){
+                    saveSound(0);
+                }
+                else if(loadSound() == 0){
+                    saveSound(1);
+                }
+                imageIn(loadSound());
+                System.out.println("sound: " + loadSound());
             }
         });
 
@@ -79,9 +115,13 @@ public class GuessAsianGerb extends AppCompatActivity {
                     savedResultOne();
                     first.setBackgroundResource(R.drawable.truebutton);
                     messageForResult.setText(mesTrue + first.getText() + "\".");
+                    if(loadSound() == 1)
+                        soundPlay(trueAnswerSound);
                 } else {
                     first.setBackgroundResource(R.drawable.falsebutton);
                     messageForResult.setText(mesFalse1 + first.getText() + mesFalse2 + name_country);
+                    if(loadSound() == 1)
+                        soundPlay(falseAnswerSound);
                 }
                 offClickableButton();
             }
@@ -96,9 +136,13 @@ public class GuessAsianGerb extends AppCompatActivity {
                     savedResultOne();
                     second.setBackgroundResource(R.drawable.truebutton);
                     messageForResult.setText(mesTrue + second.getText() + "\".");
+                    if(loadSound() == 1)
+                        soundPlay(trueAnswerSound);
                 } else {
                     second.setBackgroundResource(R.drawable.falsebutton);
                     messageForResult.setText(mesFalse1 + second.getText() + mesFalse2 + name_country);
+                    if(loadSound() == 1)
+                        soundPlay(falseAnswerSound);
                 }
                 offClickableButton();
             }
@@ -113,9 +157,13 @@ public class GuessAsianGerb extends AppCompatActivity {
                     savedResultOne();
                     third.setBackgroundResource(R.drawable.truebutton);
                     messageForResult.setText(mesTrue + third.getText() + "\".");
+                    if(loadSound() == 1)
+                        soundPlay(trueAnswerSound);
                 } else {
                     third.setBackgroundResource(R.drawable.falsebutton);
                     messageForResult.setText(mesFalse1 + third.getText() + mesFalse2 + name_country);
+                    if(loadSound() == 1)
+                        soundPlay(falseAnswerSound);
                 }
                 offClickableButton();
             }
@@ -130,9 +178,13 @@ public class GuessAsianGerb extends AppCompatActivity {
                     savedResultOne();
                     fourth.setBackgroundResource(R.drawable.truebutton);
                     messageForResult.setText(mesTrue + fourth.getText() + "\".");
+                    if(loadSound() == 1)
+                        soundPlay(trueAnswerSound);
                 } else {
                     fourth.setBackgroundResource(R.drawable.falsebutton);
                     messageForResult.setText(mesFalse1 + fourth.getText() + mesFalse2 + name_country);
+                    if(loadSound() == 1)
+                        soundPlay(falseAnswerSound);
                 }
                 offClickableButton();
             }
@@ -147,9 +199,13 @@ public class GuessAsianGerb extends AppCompatActivity {
                     savedResultOne();
                     fifth.setBackgroundResource(R.drawable.truebutton);
                     messageForResult.setText(mesTrue + first.getText() + "\".");
+                    if(loadSound() == 1)
+                        soundPlay(falseAnswerSound);
                 } else {
                     fifth.setBackgroundResource(R.drawable.falsebutton);
                     messageForResult.setText(mesFalse1 + first.getText() + mesFalse2 + name_country);
+                    if(loadSound() == 1)
+                        soundPlay(falseAnswerSound);
                 }
                 offClickableButton();
             }
@@ -224,6 +280,18 @@ public class GuessAsianGerb extends AppCompatActivity {
     public int loadResultTwo(){
         sPrefTwo = getSharedPreferences(variable.SAVE_TWO, Context.MODE_PRIVATE);
         return sPrefTwo.getInt(variable.SAVE_TWO, 0);
+    }
+
+    public void saveSound(int sound){
+        sPrefSound = getSharedPreferences(variable.SOUND, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editoro = sPrefSound.edit();
+        editoro.putInt(variable.SOUND, sound);
+        editoro.apply();
+    }
+
+    public int loadSound(){
+        sPrefSound = getSharedPreferences(variable.SOUND, Context.MODE_PRIVATE);
+        return sPrefSound.getInt(variable.SOUND, 0);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

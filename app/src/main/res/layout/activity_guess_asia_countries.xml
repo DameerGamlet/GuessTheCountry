@@ -13,16 +13,30 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/back"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/abc_vector_test"
-            android:background="?android:selectableItemBackground"
-            />
+        <LinearLayout
+            android:padding="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:background="?android:selectableItemBackground"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/abc_vector_test" />
+
+            <ImageButton
+                android:layout_marginLeft="225dp"
+                android:id="@+id/soundImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                android:background="?android:selectableItemBackground"
+                />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/countryImage"
