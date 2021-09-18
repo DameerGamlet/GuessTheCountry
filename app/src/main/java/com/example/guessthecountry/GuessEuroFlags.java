@@ -21,10 +21,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class GuessEuroFlags extends AppCompatActivity {
-    GlobalVariable variable = new GlobalVariable();
-    CountryArrays arrays = new CountryArrays();
-    Random random = new Random();
+public class GuessEuroFlags extends AppCompatActivity implements VariableInterface{
     int numberIgame, indexCorrectResult,
             countEuroFlags = variable.countEuroFlags;
     ImageView countryImage;
@@ -48,7 +45,6 @@ public class GuessEuroFlags extends AppCompatActivity {
         fifth = findViewById(R.id.fifthButton);
 
         soundImageButton = findViewById(R.id.soundImage);
-
         countryInfo = findViewById(R.id.country_info);
 
         next = findViewById(R.id.next);
@@ -72,6 +68,24 @@ public class GuessEuroFlags extends AppCompatActivity {
         else if(i == 0){
             soundImageButton.setImageResource(R.drawable.offsound);
         }
+    }
+
+    public void buttonOperation(Button button){
+        if (button.getId() == indexCorrectResult) {
+            savedCountry();
+            savedResultTwo();
+            button.setBackgroundResource(R.drawable.truebutton);
+            messageForResult.setText(mesTrue);
+            if(loadSound() == 1)
+                soundPlay(trueAnswerSound);
+        } else {
+            button.setBackgroundResource(R.drawable.falsebutton);
+            messageForResult.setText(mesFalse1 + button.getText() + mesFalse2 + cap);
+            if(loadSound() == 1)
+                soundPlay(falseAnswerSound);
+        }
+        savedResultOne();
+        offClickableButton();
     }
 
     private void soundPlay(MediaPlayer sound){
@@ -111,101 +125,31 @@ public class GuessEuroFlags extends AppCompatActivity {
         first.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (first.getId() == indexCorrectResult) {
-                    savedCountry();
-                    savedResultTwo();
-                    first.setBackgroundResource(R.drawable.truebutton);
-                    messageForResult.setText(mesTrue);
-                    if(loadSound() == 1)
-                        soundPlay(trueAnswerSound);
-                } else {
-                    first.setBackgroundResource(R.drawable.falsebutton);
-                    messageForResult.setText(mesFalse1 + first.getText() + mesFalse2 + cap);
-                    if(loadSound() == 1)
-                        soundPlay(falseAnswerSound);
-                }
-                savedResultOne();
-                offClickableButton();
+                buttonOperation(first);
             }
         });
         second.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (second.getId() == indexCorrectResult) {
-                    savedCountry();
-                    savedResultTwo();
-                    second.setBackgroundResource(R.drawable.truebutton);
-                    messageForResult.setText(mesTrue);
-                    if(loadSound() == 1)
-                        soundPlay(trueAnswerSound);
-                } else {
-                    second.setBackgroundResource(R.drawable.falsebutton);
-                    messageForResult.setText(mesFalse1 + second.getText() + mesFalse2 + cap);
-                    if(loadSound() == 1)
-                        soundPlay(falseAnswerSound);
-                }
-                offClickableButton();
-                savedResultOne();
+                buttonOperation(second);
             }
         });
         third.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (third.getId() == indexCorrectResult) {
-                    savedCountry();
-                    savedResultTwo();
-                    third.setBackgroundResource(R.drawable.truebutton);
-                    messageForResult.setText(mesTrue);
-                    if(loadSound() == 1)
-                        soundPlay(trueAnswerSound);
-                } else {
-                    third.setBackgroundResource(R.drawable.falsebutton);
-                    messageForResult.setText(mesFalse1 + third.getText() + mesFalse2 + cap);
-                    if(loadSound() == 1)
-                        soundPlay(falseAnswerSound);
-                }
-                offClickableButton();
-                savedResultOne();
+                buttonOperation(third);
             }
         });
         fourth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (fourth.getId() == indexCorrectResult) {
-                    savedCountry();
-                    savedResultTwo();
-                    fourth.setBackgroundResource(R.drawable.truebutton);
-                    messageForResult.setText(mesTrue);
-                    if(loadSound() == 1)
-                        soundPlay(trueAnswerSound);
-                } else {
-                    fourth.setBackgroundResource(R.drawable.falsebutton);
-                    messageForResult.setText(mesFalse1 + fourth.getText() + mesFalse2 + cap);
-                    if(loadSound() == 1)
-                        soundPlay(falseAnswerSound);
-                }
-                offClickableButton();
-                savedResultOne();
+                buttonOperation(fourth);
             }
         });
         fifth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (fifth.getId() == indexCorrectResult) {
-                    savedCountry();
-                    savedResultTwo();
-                    fifth.setBackgroundResource(R.drawable.truebutton);
-                    messageForResult.setText(mesTrue);
-                    if(loadSound() == 1)
-                        soundPlay(trueAnswerSound);
-                } else {
-                    fifth.setBackgroundResource(R.drawable.falsebutton);
-                    messageForResult.setText(mesFalse1 + first.getText() + mesFalse2 + cap);
-                    if(loadSound() == 1)
-                        soundPlay(falseAnswerSound);
-                }
-                offClickableButton();
-                savedResultOne();
+                buttonOperation(fifth);
             }
         });
 

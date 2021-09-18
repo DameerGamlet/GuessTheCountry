@@ -21,10 +21,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class GuessAsiaCountries extends AppCompatActivity {
-    GlobalVariable variable = new GlobalVariable();
-    CountryArrays arrays = new CountryArrays();
-    Random random = new Random();
+public class GuessAsiaCountries extends AppCompatActivity implements VariableInterface{
     int numberIgame;
     ImageView countryImage;
     ImageButton soundImageButton;
@@ -47,6 +44,13 @@ public class GuessAsiaCountries extends AppCompatActivity {
 
     private void soundPlay(MediaPlayer sound){
         sound.start();
+    }
+
+    private void buttonOperation(Button button){
+        button.setClickable(false);
+        button.setBackground(null);
+        String do_name = name_c.getText().toString();
+        name_c.setText(do_name + button.getText());
     }
 
     @Override
@@ -117,150 +121,105 @@ public class GuessAsiaCountries extends AppCompatActivity {
             button1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    button1.setClickable(false);
-                    button1.setBackground(null);
-                    String do_name = name_c.getText().toString();
-                    name_c.setText(do_name + button1.getText());
+                    buttonOperation(button1);
                 }
             });
 
             button2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    button2.setClickable(false);
-                    button2.setBackground(null);
-                    String do_name = name_c.getText().toString();
-                    name_c.setText(do_name + button2.getText());
+                    buttonOperation(button2);
                 }
             });
 
             button3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    button3.setClickable(false);
-                    button3.setBackground(null);
-                    String do_name = name_c.getText().toString();
-                    name_c.setText((do_name +button3.getText()).toUpperCase());
+                    buttonOperation(button3);
                 }
             });
 
             button4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    button4.setClickable(false);
-                    button4.setBackground(null);
-                    String do_name = name_c.getText().toString();
-                    name_c.setText(do_name + button4.getText());
+                    buttonOperation(button4);
                 }
             });
 
             button5.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    button5.setClickable(false);
-                    button5.setBackground(null);
-                    String do_name = name_c.getText().toString();
-                    name_c.setText(do_name +button5.getText());
+                    buttonOperation(button5);
                 }
             });
 
             button7.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    button7.setClickable(false);
-                    button7.setBackground(null);
-                    String do_name = name_c.getText().toString();
-                    name_c.setText(do_name +button7.getText());
+                    buttonOperation(button7);
                 }
             });
 
             button8.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    button8.setClickable(false);
-                    button8.setBackground(null);
-                    String do_name = name_c.getText().toString();
-                    name_c.setText(do_name + button8.getText());
+                    buttonOperation(button8);
                 }
             });
 
             button9.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    button9.setClickable(false);
-                    button9.setBackground(null);
-                    String do_name = name_c.getText().toString();
-                    name_c.setText(do_name + button9.getText());
+                    buttonOperation(button9);
                 }
             });
 
             button10.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    button10.setClickable(false);
-                    button10.setBackground(null);
-                    String do_name = name_c.getText().toString();
-                    name_c.setText(do_name + button10.getText());
+                    buttonOperation(button10);
                 }
             });
 
             button11.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    button11.setClickable(false);
-                    button11.setBackground(null);
-                    String do_name = name_c.getText().toString();
-                    name_c.setText(do_name + button11.getText());
+                    buttonOperation(button11);
                 }
             });
 
             button13.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    button13.setClickable(false);
-                    button13.setBackground(null);
-                    String do_name = name_c.getText().toString();
-                    name_c.setText(do_name + button13.getText());
+                    buttonOperation(button13);
                 }
             });
 
             button14.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    button14.setClickable(false);
-                    button14.setBackground(null);
-                    String do_name = name_c.getText().toString();
-                    name_c.setText(do_name + button14.getText());
+                    buttonOperation(button14);
                 }
             });
 
             button15.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    button15.setClickable(false);
-                    button15.setBackground(null);
-                    String do_name = name_c.getText().toString();
-                    name_c.setText(do_name + button15.getText());
+                    buttonOperation(button15);
                 }
             });
 
             button16.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    button16.setClickable(false);
-                    button16.setBackground(null);
-                    String do_name = name_c.getText().toString();
-                    name_c.setText(do_name + button16.getText());
+                    buttonOperation(button16);
                 }
             });
 
             button17.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    button17.setClickable(false);
-                    button17.setBackground(null);
-                    String do_name = name_c.getText().toString();
-                    name_c.setText(do_name + button17.getText());
+                    buttonOperation(button17);
                 }
             });
         }

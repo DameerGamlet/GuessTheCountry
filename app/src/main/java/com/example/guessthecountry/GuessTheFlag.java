@@ -21,11 +21,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class GuessTheFlag extends AppCompatActivity {
-    GlobalVariable variable = new GlobalVariable();
+public class GuessTheFlag extends AppCompatActivity implements VariableInterface{
     public int numberIgame, indexCorrectResult, countFlags = variable.countFlags;
-    CountryArrays arrays = new CountryArrays();
-    Random random = new Random();
     ImageView countryImage;
     ImageButton soundImageButton;
     Button first, second, third, fourth, fifth, next;
@@ -74,6 +71,26 @@ public class GuessTheFlag extends AppCompatActivity {
         sound.start();
     }
 
+    public void buttonOperation(Button button){
+        System.out.println(loadSound());
+        if(button.getId() == indexCorrectResult){
+            savedCountry();
+            savedResultTwo();
+            button.setBackgroundResource(R.drawable.truebutton);
+            messageForResult.setText(mesTrue + first.getText() + "\".");
+            if(loadSound() == 1)
+                soundPlay(trueAnswerSound);
+        }
+        else{
+            button.setBackgroundResource(R.drawable.falsebutton);
+            messageForResult.setText(mesFalse1 + button.getText() + mesFalse2 + name_country);
+            if(loadSound() == 1)
+                soundPlay(falseAnswerSound);
+        }
+        savedResultOne();
+        onClickableButton(false);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,111 +124,35 @@ public class GuessTheFlag extends AppCompatActivity {
         first.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(loadSound());
-                if(first.getId() == indexCorrectResult){
-                    savedCountry();
-                    savedResultTwo();
-                    first.setBackgroundResource(R.drawable.truebutton);
-                    messageForResult.setText(mesTrue + first.getText() + "\".");
-                    if(loadSound() == 1)
-                        soundPlay(trueAnswerSound);
-                }
-                else{
-                    first.setBackgroundResource(R.drawable.falsebutton);
-                    messageForResult.setText(mesFalse1 + first.getText() + mesFalse2 + name_country);
-                    if(loadSound() == 1)
-                        soundPlay(falseAnswerSound);
-                }
-                savedResultOne();
-                offClickableButton();
+                buttonOperation(first);
             }
         });
 
         second.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(second.getId() == indexCorrectResult){
-                    savedCountry();
-                    savedResultTwo();
-                    second.setBackgroundResource(R.drawable.truebutton);
-                    messageForResult.setText(mesTrue + second.getText() + "\".");
-                    if(loadSound() == 1)
-                        soundPlay(trueAnswerSound);
-                }
-                else{
-                    second.setBackgroundResource(R.drawable.falsebutton);
-                    messageForResult.setText(mesFalse1 + second.getText() + mesFalse2 + name_country);
-                    if(loadSound() == 1)
-                        soundPlay(falseAnswerSound);
-                }
-                offClickableButton();
-                savedResultOne();
+                buttonOperation(second);
             }
         });
 
         third.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(third.getId() == indexCorrectResult){
-                    savedCountry();
-                    savedResultTwo();
-                    third.setBackgroundResource(R.drawable.truebutton);
-                    messageForResult.setText(mesTrue + third.getText() + "\".");
-                    if(loadSound() == 1)
-                        soundPlay(trueAnswerSound);
-                }
-                else{
-                    third.setBackgroundResource(R.drawable.falsebutton);
-                    messageForResult.setText(mesFalse1 + third.getText() + mesFalse2 + name_country);
-                    if(loadSound() == 1)
-                        soundPlay(falseAnswerSound);
-                }
-                offClickableButton();
-                savedResultOne();
+                buttonOperation(third);
             }
         });
 
         fourth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(fourth.getId() == indexCorrectResult){
-                    savedCountry();
-                    savedResultTwo();
-                    fourth.setBackgroundResource(R.drawable.truebutton);
-                    messageForResult.setText(mesTrue + fourth.getText() + "\".");
-                    if(loadSound() == 1)
-                        soundPlay(trueAnswerSound);
-                }
-                else{
-                    fourth.setBackgroundResource(R.drawable.falsebutton);
-                    messageForResult.setText(mesFalse1 + fourth.getText() + mesFalse2 + name_country);
-                    if(loadSound() == 1)
-                        soundPlay(falseAnswerSound);
-                }
-                offClickableButton();
-                savedResultOne();
+                buttonOperation(fourth);
             }
         });
 
         fifth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(fifth.getId() == indexCorrectResult){
-                    savedCountry();
-                    savedResultTwo();
-                    fifth.setBackgroundResource(R.drawable.truebutton);
-                    messageForResult.setText(mesTrue + fifth.getText() + "\".");
-                    if(loadSound() == 1)
-                        soundPlay(trueAnswerSound);
-                }
-                else{
-                    fifth.setBackgroundResource(R.drawable.falsebutton);
-                    messageForResult.setText(mesFalse1 + fifth.getText() + mesFalse2 + name_country);
-                    if(loadSound() == 1)
-                        soundPlay(falseAnswerSound);
-                }
-                offClickableButton();
-                savedResultOne();
+                buttonOperation(fifth);
             }
         });
 
@@ -219,25 +160,18 @@ public class GuessTheFlag extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 messageForResult.setText("");
-                onClickableButton();
+                onClickableButton(true);
                 generated();
             }
         });
     }
 
-    public void onClickableButton(){
-        first.setClickable(true);
-        second.setClickable(true);
-        third.setClickable(true);
-        fourth.setClickable(true);
-        fifth.setClickable(true);
-    }
-    public void offClickableButton(){
-        first.setClickable(false);
-        second.setClickable(false);
-        third.setClickable(false);
-        fourth.setClickable(false);
-        fifth.setClickable(false);
+    public void onClickableButton(boolean option) {
+        first.setClickable(option);
+        second.setClickable(option);
+        third.setClickable(option);
+        fourth.setClickable(option);
+        fifth.setClickable(option);
     }
 
     public void clearButton(){

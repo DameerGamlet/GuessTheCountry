@@ -21,26 +21,19 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class GuessAsianGerb extends AppCompatActivity {
-    GlobalVariable variable = new GlobalVariable();
-    CountryArrays arrays = new CountryArrays();
-    public int numberIgame, indexCorrectResult, countFlags = variable.asian_flag;
-    Random random = new Random();
+public class GuessAsianGerb extends AppCompatActivity implements VariableInterface {
+    public int numberIgame, indexCorrectResult;
     ImageView countryImage;
     Button first, second, third, fourth, fifth, next;
     SharedPreferences sPref, sPrefOne, sPrefTwo, sPrefSound;
-    ImageButton back;
-    ImageButton soundImageButton;
+    ImageButton back, soundImageButton;
     String name_country;
     TextView messageForResult;
-    final String mesTrue = "Верно. На картинке изображён герб страны \"",
-            mesFalse1 = "Неверно, это не герб страны \"",
-            mesFalse2 = "\". \nПравильный ответ: ";
+    final String mesTrue = "Верно. На картинке изображён герб страны \"", mesFalse1 = "Неверно, это не герб страны \"", mesFalse2 = "\". \nПравильный ответ: ";
     MediaPlayer trueAnswerSound, falseAnswerSound;
 
     private void init() {
         countryImage = findViewById(R.id.countryImage);
-
         first = findViewById(R.id.firstButton);
         second = findViewById(R.id.secondButton);
         third = findViewById(R.id.thirdButton);
@@ -63,17 +56,32 @@ public class GuessAsianGerb extends AppCompatActivity {
         falseAnswerSound = MediaPlayer.create(this, R.raw.false_answer);
     }
 
-    public void imageIn(int i){
-        if(i == 1){
+    public void imageIn(int i) {
+        if (i == 1) {
             soundImageButton.setImageResource(R.drawable.onsound);
-        }
-        else if(i == 0){
+        } else if (i == 0) {
             soundImageButton.setImageResource(R.drawable.offsound);
         }
     }
 
-    private void soundPlay(MediaPlayer sound){
-        sound.start();
+    private void soundPlay(MediaPlayer sound) {sound.start();}
+
+    public void buttonOperation(Button button){
+        savedResultOne();
+        if (button.getId() == indexCorrectResult) {
+            savedCountry();
+            savedResultOne();
+            button.setBackgroundResource(R.drawable.truebutton);
+            messageForResult.setText(mesTrue + button.getText() + "\".");
+            if (loadSound() == 1)
+                soundPlay(trueAnswerSound);
+        } else {
+            button.setBackgroundResource(R.drawable.falsebutton);
+            messageForResult.setText(mesFalse1 + button.getText() + mesFalse2 + name_country);
+            if (loadSound() == 1)
+                soundPlay(falseAnswerSound);
+        }
+        onClickableButton(false);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -95,10 +103,9 @@ public class GuessAsianGerb extends AppCompatActivity {
         soundImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(loadSound() == 1){
+                if (loadSound() == 1) {
                     saveSound(0);
-                }
-                else if(loadSound() == 0){
+                } else if (loadSound() == 0) {
                     saveSound(1);
                 }
                 imageIn(loadSound());
@@ -109,105 +116,35 @@ public class GuessAsianGerb extends AppCompatActivity {
         first.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                savedResultOne();
-                if (first.getId() == indexCorrectResult) {
-                    savedCountry();
-                    savedResultOne();
-                    first.setBackgroundResource(R.drawable.truebutton);
-                    messageForResult.setText(mesTrue + first.getText() + "\".");
-                    if(loadSound() == 1)
-                        soundPlay(trueAnswerSound);
-                } else {
-                    first.setBackgroundResource(R.drawable.falsebutton);
-                    messageForResult.setText(mesFalse1 + first.getText() + mesFalse2 + name_country);
-                    if(loadSound() == 1)
-                        soundPlay(falseAnswerSound);
-                }
-                offClickableButton();
+                buttonOperation(first);
             }
         });
 
         second.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                savedResultOne();
-                if (second.getId() == indexCorrectResult) {
-                    savedCountry();
-                    savedResultOne();
-                    second.setBackgroundResource(R.drawable.truebutton);
-                    messageForResult.setText(mesTrue + second.getText() + "\".");
-                    if(loadSound() == 1)
-                        soundPlay(trueAnswerSound);
-                } else {
-                    second.setBackgroundResource(R.drawable.falsebutton);
-                    messageForResult.setText(mesFalse1 + second.getText() + mesFalse2 + name_country);
-                    if(loadSound() == 1)
-                        soundPlay(falseAnswerSound);
-                }
-                offClickableButton();
+                buttonOperation(second);
             }
         });
 
         third.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                savedResultOne();
-                if (third.getId() == indexCorrectResult) {
-                    savedCountry();
-                    savedResultOne();
-                    third.setBackgroundResource(R.drawable.truebutton);
-                    messageForResult.setText(mesTrue + third.getText() + "\".");
-                    if(loadSound() == 1)
-                        soundPlay(trueAnswerSound);
-                } else {
-                    third.setBackgroundResource(R.drawable.falsebutton);
-                    messageForResult.setText(mesFalse1 + third.getText() + mesFalse2 + name_country);
-                    if(loadSound() == 1)
-                        soundPlay(falseAnswerSound);
-                }
-                offClickableButton();
+                buttonOperation(third);
             }
         });
 
         fourth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                savedResultOne();
-                if (fourth.getId() == indexCorrectResult) {
-                    savedCountry();
-                    savedResultOne();
-                    fourth.setBackgroundResource(R.drawable.truebutton);
-                    messageForResult.setText(mesTrue + fourth.getText() + "\".");
-                    if(loadSound() == 1)
-                        soundPlay(trueAnswerSound);
-                } else {
-                    fourth.setBackgroundResource(R.drawable.falsebutton);
-                    messageForResult.setText(mesFalse1 + fourth.getText() + mesFalse2 + name_country);
-                    if(loadSound() == 1)
-                        soundPlay(falseAnswerSound);
-                }
-                offClickableButton();
+                buttonOperation(fourth);
             }
         });
 
         fifth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                savedResultOne();
-                if (fifth.getId() == indexCorrectResult) {
-                    savedCountry();
-                    savedResultOne();
-                    fifth.setBackgroundResource(R.drawable.truebutton);
-                    messageForResult.setText(mesTrue + first.getText() + "\".");
-                    if(loadSound() == 1)
-                        soundPlay(falseAnswerSound);
-                } else {
-                    fifth.setBackgroundResource(R.drawable.falsebutton);
-                    messageForResult.setText(mesFalse1 + first.getText() + mesFalse2 + name_country);
-                    if(loadSound() == 1)
-                        soundPlay(falseAnswerSound);
-                }
-                offClickableButton();
+                buttonOperation(fifth);
             }
         });
 
@@ -215,26 +152,18 @@ public class GuessAsianGerb extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 messageForResult.setText("");
-                onClickableButton();
+                onClickableButton(true);
                 generated();
             }
         });
     }
 
-    public void onClickableButton() {
-        first.setClickable(true);
-        second.setClickable(true);
-        third.setClickable(true);
-        fourth.setClickable(true);
-        fifth.setClickable(true);
-    }
-
-    public void offClickableButton() {
-        first.setClickable(false);
-        second.setClickable(false);
-        third.setClickable(false);
-        fourth.setClickable(false);
-        fifth.setClickable(false);
+    public void onClickableButton(boolean option) {
+        first.setClickable(option);
+        second.setClickable(option);
+        third.setClickable(option);
+        fourth.setClickable(option);
+        fifth.setClickable(option);
     }
 
     public void clearButton() {
@@ -258,38 +187,38 @@ public class GuessAsianGerb extends AppCompatActivity {
     }
 
 
-    public void savedResultOne(){
+    public void savedResultOne() {
         sPrefOne = getSharedPreferences(variable.SAVE_ONE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editorOne = sPrefOne.edit();
         editorOne.putInt(variable.SAVE_ONE, loadResultOne() + 1);
         editorOne.apply();
     }
 
-    public int loadResultOne(){
+    public int loadResultOne() {
         sPrefOne = getSharedPreferences(variable.SAVE_ONE, Context.MODE_PRIVATE);
         return sPrefOne.getInt(variable.SAVE_ONE, 0);
     }
 
-    public void savedResultTwo(){
+    public void savedResultTwo() {
         sPrefTwo = getSharedPreferences(variable.SAVE_TWO, Context.MODE_PRIVATE);
         SharedPreferences.Editor editorTwo = sPrefTwo.edit();
         editorTwo.putInt(variable.SAVE_TWO, loadResultTwo() + 1);
         editorTwo.apply();
     }
 
-    public int loadResultTwo(){
+    public int loadResultTwo() {
         sPrefTwo = getSharedPreferences(variable.SAVE_TWO, Context.MODE_PRIVATE);
         return sPrefTwo.getInt(variable.SAVE_TWO, 0);
     }
 
-    public void saveSound(int sound){
+    public void saveSound(int sound) {
         sPrefSound = getSharedPreferences(variable.SOUND, Context.MODE_PRIVATE);
         SharedPreferences.Editor editoro = sPrefSound.edit();
         editoro.putInt(variable.SOUND, sound);
         editoro.apply();
     }
 
-    public int loadSound(){
+    public int loadSound() {
         sPrefSound = getSharedPreferences(variable.SOUND, Context.MODE_PRIVATE);
         return sPrefSound.getInt(variable.SOUND, 0);
     }
